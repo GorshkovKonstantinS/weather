@@ -1,48 +1,34 @@
 package test.moscow.weather.ui.theme
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-)
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 
 @Composable
-fun WeatherTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+fun AppTheme(
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+    val provideAppTheme = ProvideAppTheme(
+        colorScheme = AppThemeLightColorScheme,
+        fonts = Fonts()
     )
+
+    CompositionLocalProvider(LocalProvideAppTheme provides provideAppTheme, content = content)
 }
+
+object AppTheme {
+    val colorScheme: AppThemeColors
+        @Composable
+        get() = LocalProvideAppTheme.current.colorScheme
+
+    val fonts = Fonts()
+}
+
+val LocalProvideAppTheme = staticCompositionLocalOf<ProvideAppTheme> {
+    error("No theme provided")
+}
+
+data class ProvideAppTheme(
+    val colorScheme: AppThemeColors,
+    val fonts: Fonts
+)

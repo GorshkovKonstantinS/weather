@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">weather</string>
+
+    <!--  Weather  -->
+    <string name="weather_title">Прогноз погоды</string>
+    <string name="weather_current_humidity">Влажность: %1$s%%</string>
+    <string name="weather_current_visibility">Видимость: %1$s км.</string>
+    <string name="weather_current_feels_temp">Ощущается как : %1$s &#176;C</string>
+    <string name="weather_current_wind">Ветер : %.1f м/с</string>
+    <string name="weather_text">Погода сейчас</string>
+    <string name="weather_temp_day">Температура днем: %1$s</string>
+    <string name="weather_temp_night">Температура ночью: %1$s</string>
+    <string name="weather_day_max_wind">Порывы ветра до: %.1f м/с</string>
+    <string name="weather_day_chance_of_rain">Вероятность дождя: %1$s%%</string>
+    <string name="weather_error_dialog_title">Ошибка загрузки данных</string>
+    <string name="weather_error_dialog_text">Не удалось получить информацию о погоде</string>
+    <string name="weather_error_dialog_button_text">Повторить</string>
+
+
+
+    <string name="temperature">%1$s &#176;C</string>
+
 </resources>

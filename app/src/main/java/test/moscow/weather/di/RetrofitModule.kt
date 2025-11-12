@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import test.moscow.weather.BuildConfig
 import test.moscow.weather.repository.weather.WeatherApiService
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -29,8 +30,8 @@ class RetrofitModule {
                     .let { chain.proceed(it) }
             }
             .addInterceptor(HttpLoggingInterceptor().apply {
-//                if (BuildConfig.DEBUG)
-//                    level = HttpLoggingInterceptor.Level.BODY
+                if (BuildConfig.DEBUG)
+                    level = HttpLoggingInterceptor.Level.BODY
             })
             .build()
 
@@ -39,7 +40,7 @@ class RetrofitModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("http://api.weatherapi.com/v1/")
+            .baseUrl("https://api.weatherapi.com/v1/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
