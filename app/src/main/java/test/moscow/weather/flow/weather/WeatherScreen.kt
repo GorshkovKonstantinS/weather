@@ -1,6 +1,5 @@
 package test.moscow.weather.flow.weather
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,40 +33,43 @@ fun WeatherScreen(
         isRefreshing = false,
         onRefresh = onRefresh
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 20.dp)
+        Column(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            item {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+            Text(
+                text = stringResource(R.string.weather_title),
+                style = AppTheme.fonts.megaSemiboldText
+                    .copy(color = AppTheme.colorScheme.onBackground),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(20.dp)
+            )
+            FadeInFadeOutAnimation(
+                visible = state.weather != Weather()
+            ) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 20.dp)
                 ) {
-                    Text(
-                        text = stringResource(R.string.weather_title),
-                        style = AppTheme.fonts.megaSemiboldText
-                            .copy(color = AppTheme.colorScheme.onBackground),
-                        modifier = Modifier.padding(20.dp)
-                    )
-                }
-            }
-            item {
-                FadeInFadeOutAnimation(
-                    visible = state.weather != Weather()
-                ) {
-                    Column {
+                    item {
                         WeatherCurrentDay(
                             locationName = state.weather.location.name,
                             current = state.weather.current,
                         )
+                    }
+                    item {
                         WeatherSelectedDay(
                             hours = state.selectedForecastDay.hours,
                             modifier = Modifier.padding(top = 20.dp)
                         )
+                    }
+                    item {
                         WeatherForDay(
                             selectedDay = state.selectedForecastDay,
                             modifier = Modifier.padding(16.dp, 20.dp, 16.dp)
                         )
+                    }
+                    item {
                         WeatherDays(
                             days = state.weather.forecastDays,
                             onSelectDay = onSelectDay,
@@ -78,6 +80,5 @@ fun WeatherScreen(
             }
         }
     }
-
 
 }
